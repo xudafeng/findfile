@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+/* ================================================================
+ * findfile by xdf(xudafeng[at]126.com)
+ *
+ * first created at : Sat Jul 23 2016 22:42:21 GMT+0800 (CST)
+ *
+ * ================================================================
+ * Copyright 2013 xdf
+ *
+ * Licensed under the MIT License
+ * You may not use this file except in compliance with the License.
+ *
+ * ================================================================ */
+
+'use strict';
+
+var program = require('commander');
+
+var findFile = require('..');
+var pkg = require('../package.json');
+
+program
+  .option('-v, --versions', 'output version infomation')
+  .usage('[module name]');
+
+program.parse(process.argv);
+
+if (program.versions) {
+  console.info('\n  ' + pkg.version + '\n');
+  process.exit(0);
+}
+
+var name = program.args[0];
+
+if (name) {
+  var file = findFile(name, true);
+
+  if (file) {
+    console.log(file);
+  } else {
+    console.log(`can not find: ${name}`);
+  }
+}
